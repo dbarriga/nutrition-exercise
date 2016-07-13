@@ -10,12 +10,12 @@ config(['$locationProvider', '$routeProvider', '$httpProvider', function($locati
       templateUrl:'partials/search.html',
       controller: 'searchCtrl',
       title: 'Search for Food'
-  }).when('/report/:reportId')
+  }).when('/report/:reportId',
   {
       templateUrl: 'partials/report.html',
-      controller: 'searchCtrl',
+      controller: 'reportCtrl',
       title: 'Reports'
-  };
+  });
 
   $routeProvider.otherwise({redirectTo: '/'});
 }]);

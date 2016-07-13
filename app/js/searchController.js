@@ -1,5 +1,5 @@
-angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService',
-    function($scope, searchService)
+angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService', '$routeParams',
+    function($scope, searchService, $routeParams)
     {
         $scope.food = '';
         $scope.search = function() {
@@ -10,11 +10,20 @@ angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService',
             });
         };
 
-        $scope.report = function(id)
-        {
-            searchService.getReport(id).then(function(result){
-                $scope.reportResult = result.data;
-                console.log($scope.reportResult);
-            });
+        $scope.updateFavorites = function(food) {
+            if(food.favorite)
+            {
+                let x = localStorage.favorites.length > 0 ? localStorage.favorites.split(',') : [];
+                x.push(food.ndbno);
+                localStorage.favorites = x.toString();
+            }
+            else
+            {
+                let x = localStorage.favorites.split(',');
+                let index = x.indexOf(food.ndbno);
+                x.splice(index, 1);
+                localStorage.favorites = x.toString();
+            }
         }
+
 }]);

@@ -1,28 +1,43 @@
 <div class="row">
     <div class="col-md-12">
-        <h4>Search</h4>
         <div class="row">
             <div class="col-md-2">
+                <h4>Search</h4>
                 <form class="form-group">
                     <input class="form-control" type="text" ng-model="food"></input>
                     <button type="button" class="input-control btn btn-success" ng-click="search()">Seach</button>
                 </form>
             </div>
+            <div class="col-md-10">
+                <h4>Favorites</h4>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Food</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="food in favorites">
+                        <td ng-bind="::food.name"></td>
+                        <td><a ng-href="/#/report/{{food.ndbno}}"><button class="btn btn-default">Report</button></a><td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <table ng-if="foodResult.list.item.length > 0" class="table table-strip">
+                <table ng-if="foodResult.list.item.length > 0" class="table table-striped">
                     <tr>
                         <th>Id</th>
                         <th>Name</th>
                         <th>Group</th>
                         <th></th>
+                        <th>Favorite</th>
                     </tr>
                     <tr ng-repeat="food in foodResult.list.item">
                         <td ng-bind="::food.ndbno"></td>
                         <td ng-bind="::food.name"></td>
                         <td ng-bind="::food.group"></td>
-                        <td><button class="btn btn-default" ng-click="report(food.ndbno)">Report</button><td>
+                        <td><a ng-href="/#/report/{{food.ndbno}}"><button class="btn btn-default">Report</button></a></td>
+                        <td><input type="checkbox" ng-change="updateFavorites(food)" ng-model="food.favorite"></td>
                     </tr>
                 </table>
             </div>
