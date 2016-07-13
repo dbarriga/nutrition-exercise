@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+        <h4>Search</h4>
+        <div class="row">
+            <div class="col-md-2">
+                <form class="form-group">
+                    <input class="form-control" type="text" ng-model="food"></input>
+                    <button type="button" class="input-control btn btn-success" ng-click="search()">Seach</button>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table ng-if="foodResult.list.item.length > 0" class="table table-strip">
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Group</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="food in foodResult.list.item">
+                        <td ng-bind="::food.ndbno"></td>
+                        <td ng-bind="::food.name"></td>
+                        <td ng-bind="::food.group"></td>
+                        <td><button class="btn btn-default" ng-click="report(food.ndbno)">Report</button><td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
