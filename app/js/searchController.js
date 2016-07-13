@@ -5,7 +5,8 @@ angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService', '$r
         $scope.search = function() {
             searchService.getFood($scope.food).then(function(result)
             {
-                $scope.foodResult = result.data;
+                $scope.foodResult = result.data.list.item;
+
             });
         };
 
@@ -13,9 +14,15 @@ angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService', '$r
             if(food.favorite)
             {
                 let x = localStorage.favorites.length > 0 ? localStorage.favorites.split(',') : [];
-                x.push(food.ndbno);
-                localStorage.favorites = x.toString();
-                $scope.favorites.push(food);
+                if(x.indexOf(food.ndbno) > -1)
+                {
+                    $scope.alreadyFavorite = true;
+                }
+                else {
+                    x.push(food.ndbno);
+                    localStorage.favorites = x.toString();
+                    $scope.favorites.push(food);
+                }
             }
             else
             {
