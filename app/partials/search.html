@@ -14,10 +14,12 @@
                     <tr>
                         <th>Food</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     <tr ng-repeat="food in favorites">
                         <td ng-bind="::food.name"></td>
-                        <td><a ng-href="/#/report/{{food.ndbno}}"><button class="btn btn-default">Report</button></a><td>
+                        <td><a ng-href="/#/report/{{food.ndbno}}"><button class="btn btn-default">Report</button></a></td>
+                        <td><button class="btn btn-danger" ng-click="removeFavorite(food)">Remove</button></td>
                     </tr>
                 </table>
             </div>
