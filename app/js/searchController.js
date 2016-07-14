@@ -36,12 +36,11 @@ angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService', '$r
             let index = x.indexOf(food.ndbno);
             x.splice(index, 1);
             localStorage.favorites = x.toString();
-            $scope.favorites.forEach(function(item){
+            $scope.favorites.forEach(function(item, index){
                 if (item.ndbno === food.ndbno) {
-                    delete item;
+                    $scope.favorites.splice(index, 1);
                 }
             });
-            $scope.favorites.splice(index)
         };
 
         function checkFavorites()
