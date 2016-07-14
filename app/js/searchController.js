@@ -2,18 +2,30 @@ angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService', '$r
     function($scope, searchService, $routeParams)
     {
         $scope.food = '';
+        $scope.alreadyFavorite = false;
+        $scope.error = false;
         $scope.search = function() {
             searchService.getFood($scope.food).then(function(result)
             {
-                $scope.foodResult = result.data.list.item;
-
+                    if(result.data)
+                    {
+                        $scope.foodResult = result.data.list.item;
+                    }
+                    else
+                    {
+                        $scope.error = true;
+                    }
             });
         };
 
         $scope.updateFavorites = function(food) {
             if(food.favorite)
             {
-                let x = localStorage.favorites.length > 0 ? localStorage.favorites.split(',') : [];
+                if(!localStorage.favorites)
+                {
+                    localStorage.favorites = '';
+                }
+                var x = localStorage.favorites.length > 0 ? localStorage.favorites.split(',') : [];
                 if(x.indexOf(food.ndbno) > -1)
                 {
                     $scope.alreadyFavorite = true;
@@ -32,8 +44,8 @@ angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService', '$r
 
         $scope.removeFavorite = function(food)
         {
-            let x = localStorage.favorites.split(',');
-            let index = x.indexOf(food.ndbno);
+            var x = localStorage.favorites.split(',');
+            var index = x.indexOf(food.ndbno);
             x.splice(index, 1);
             localStorage.favorites = x.toString();
             $scope.favorites.forEach(function(item, index){
@@ -41,19 +53,26 @@ angular.module('myApp').controller('searchCtrl', ['$scope', 'searchService', '$r
                     $scope.favorites.splice(index, 1);
                 }
             });
+            food.favorite = false;
         };
 
         function checkFavorites()
         {
             $scope.favorites = [];
-            let x = localStorage.favorites.length > 0 ? localStorage.favorites.split(',') : [];
-            x.forEach(function(item)
+            if(localStorage.favorites)
             {
-                searchService.getFood(item).then(function(result)
+                var x = localStorage.favorites.length > 0 ? localStorage.favorites.split(',') : [];
+                x.forEach(function(item)
                 {
-                    $scope.favorites.push(result.data.list.item[0]);
+                    searchService.getFood(item).then(function(result)
+                    {
+                        $scope.favorites.push(result.data.list.item[0]);
+                    }, function(err)
+                    {
+                        console.log('err', err);
+                    });
                 });
-            });
+            }
         }
 
         checkFavorites();

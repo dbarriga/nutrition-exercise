@@ -6,6 +6,10 @@ angular.module('myApp').service('searchService', ['$http',
             return $http.get('http://api.nal.usda.gov/ndb/search/?format=json&q='+food+'&sort=n&max=25&offset=0&api_key=yjoFLOdw4OPGWM9zt4H3PaKN5UWVZNmdDph11eyL').then(function(response)
             {
                 return response;
+            }, function(err)
+            {
+                console.log('hola', err);
+                return err;
             });
         };
 

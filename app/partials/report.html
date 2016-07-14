@@ -1,17 +1,20 @@
-<div class="row">
-    <div class="col-md-12">
-        <h4 ng-bind="reportResult.name + ' Nutritional Report'"></h4>
-    </div>
-    <div class="col-md-3" ng-repeat="nutrients in nutrients2">
-        <h4>{{nutrients[0].group}}</h4>
-        <table class="table table-striped">
-            <tr>
-                <th class="col-md-8">Nutrient</th>
-                <th class="col-md-4">Value (g)</th>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h4 ng-bind="reportResult.name + ' Nutritional Report'"></h4>
+        </div>
+        <div class="col-md-3" ng-repeat="nutrients in nutrients2">
+            <h4>{{nutrients[0].group}}</h4>
+            <table class="table table-striped">
+                <tr>
+                    <th class="col-md-8">Nutrient</th>
+                    <th class="col-md-4">Value (g)</th>
+                </tr>
+            <tr ng-repeat="nutrient in nutrients">
+                <td class="col-md-8">{{nutrient.name}}</td>
+                <td class="col-md-4">{{nutrient.value}}</td>
             </tr>
-        <tr ng-repeat="nutrient in nutrients">
-            <td class="col-md-8">{{nutrient.name}}</td>
-            <td class="col-md-4">{{nutrient.value}}</td>
-        </tr>
+            </table>
+        </div>
     </div>
-</div>
+<div>
